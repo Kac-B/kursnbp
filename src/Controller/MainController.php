@@ -15,7 +15,7 @@ class MainController extends AbstractController
     public function index()
     {
         /*return new Response(content: '<h1> Welcome</h1>');*/
-        return $this->render(view: 'home/index.html');
+        return $this->render(view: 'home/index.html.twig');
     }
     /**
      * @Route("/custom/{name?}",name="custom")
@@ -25,6 +25,7 @@ class MainController extends AbstractController
     public function custom(Request $request)
     {
         $name = ($request->get(key: 'name'));
-        return new Response(content: '<h2> ' . $name . ' page test</h2>');
+        return $this->render(view:'home/custom.html.twig');
+        /*return new Response(content: '<h2> ' . $name . ' page test</h2>');*/
     }
 }
