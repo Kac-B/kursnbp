@@ -20,17 +20,17 @@ class Nbp
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $numer_tabeli;
+    private $numerTabeli; //TODO: remove _
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $data_publikacji;
+    private $dataPublikacji;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $nazwa_waluty;
+    private $nazwaWaluty;
 
     /**
      * @ORM\Column(type="integer")
@@ -40,12 +40,12 @@ class Nbp
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $kod_waluty;
+    private $kodWaluty;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $kurs_sredni;
+    private $kursSredni;
 
     public function getId(): ?int
     {
