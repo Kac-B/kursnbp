@@ -10,3 +10,12 @@ kernel:
 index:
     path: /main
     controller: App\Controller\MainController::index
+
+
+post:
+    path: /post
+    controller: App\Controller\PostController::index
+
+nbp:
+    path: /nbp
+    controller: App\Controller\NbpController::index
