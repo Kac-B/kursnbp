@@ -19,6 +19,20 @@ class NbpRepository extends ServiceEntityRepository
         parent::__construct($registry, Nbp::class);
     }
 
+    public function create(array $data)
+    {
+        $kurs = new Nbp();
+        $kurs->setNumerTabeli($data['nazwa_tabeli']);
+        $kurs->setDataPublikacji($data_publikacji);
+        $kurs->setNazwaWaluty($nazwa_waluty);
+        $kurs->setPrzelicznik($przelicznik);
+        $kurs->setKodWaluty($kod_waluty);
+        $kurs->setKursSredni($kurs_sredni);
+
+        $this->_em->persist($kurs);
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return Nbp[] Returns an array of Nbp objects
     //  */

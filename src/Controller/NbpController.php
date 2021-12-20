@@ -9,12 +9,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\NbpRepository;
 
-//require("../src/Entity/Nbp.php");
+use App\Api\CurrencyNbpApi;
+
 /**
  * @Route ("/nbp",name="nbp.")
  */
 class NbpController extends AbstractController
 {
+    private CurrencyNbpApi $currencyNbpApi;
+    private NbpRepository $nbpRepository;
+
+    public function __construct(CurrencyNbpApi $currencyNbpApi, NbpRepository $nbpRepository)
+    {
+        $this->currencyNbpApi = $currencyNbpApi;
+        $this->nbpRepository = $nbpRepository;
+    }
 
     /**
      * @Route ("/",name="nbp.")
@@ -37,36 +46,12 @@ class NbpController extends AbstractController
      */
     public function createnbp(ManagerRegistry $doctrine): Response
     {
-        //dwoload data from nbp 
-        $xml = simplexml_load_file('http://www.nbp.pl/kursy/xml/LastA.xml');
-        $json = json_encode($xml);
-        $array = json_decode($json, true);
+        $lastCurrency = $this->currencyNbpApi->getLast();
 
-        //create new table
-        //require("../src/Entity/Nbp.php");
-        $kurs = new Nbp();
-        $seriealizes_array = serialize($array);
-        var_dump($seriealizes_array);
+        if (!empty($lastCurrency)) {
+            $this->nbpRepository->create($lastCurrency);
+        }
 
-        /*
-        $kurs->setNumerTabeli($numer_tabeli);
-        $kurs->setDataPublikacji($data_publikacji);
-        $kurs->setNazwaWaluty($nazwa_waluty);
-        $kurs->setPrzelicznik($przelicznik);
-        $kurs->setKodWaluty($kod_waluty);
-        $kurs->setKursSredni($kurs_sredni);
-        */
-        //entity manager
-        $em = $doctrine->getManager();
-        $em->persist($seriealizes_array);
-        $em->flush();
-
-        //show data
-        echo '<pre>';
-        print_r($array);
-        echo '</pre>';
-
-
-        return new Response(content: 'Numer tabeli ' . $kurs->getNumerTabeli());
+        // return new Response(content: 'Numer tabeli ' . $kurs->getNumerTabeli());
     }
 }
